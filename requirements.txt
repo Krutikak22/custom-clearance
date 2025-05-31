@@ -1,12 +1,7 @@
-os 
-tempfile
 streamlit
-fitz
-PIL
+pymupdf
+pillow
 pytesseract
 python-docx
 joblib
-sc
 scikit-learn
-pymupdf
-pillow
