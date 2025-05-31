@@ -1,14 +1,9 @@
 import streamlit as st
 import os
 import fitz  # PyMuPDF
-from PIL import Image
-import pytesseract
 from docx import Document
 import joblib
 import tempfile
-
-# === Set path to Tesseract executable (Windows only) ===
-pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
 # === Load trained model ===
 model = joblib.load("customs_doc_classifier.pkl")
@@ -17,10 +12,6 @@ model = joblib.load("customs_doc_classifier.pkl")
 def extract_text_from_pdf(file_path):
     doc = fitz.open(file_path)
     return " ".join(page.get_text() for page in doc)
-
-def extract_text_from_image(file_path):
-    image = Image.open(file_path)
-    return pytesseract.image_to_string(image)
 
 def extract_text_from_docx(file_path):
     doc = Document(file_path)
@@ -34,8 +25,6 @@ def extract_text(file):
 
     if ext == ".pdf":
         return extract_text_from_pdf(tmp_file_path)
-    elif ext in [".jpg", ".jpeg", ".png"]:
-        return extract_text_from_image(tmp_file_path)
     elif ext == ".docx":
         return extract_text_from_docx(tmp_file_path)
     else:
@@ -75,8 +64,8 @@ st.markdown("#### Upload a document and let AI identify its type!")
 st.markdown("---")
 
 uploaded_file = st.file_uploader(
-    "📤 Upload a document (PDF, Word, or Image)", 
-    type=["pdf", "docx", "jpg", "jpeg", "png"]
+    "📤 Upload a document (PDF or Word)", 
+    type=["pdf", "docx"]
 )
 
 if uploaded_file:
