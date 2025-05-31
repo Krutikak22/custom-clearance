@@ -1,0 +1,8 @@
+os 
+tempfile
+streamlit
+fitz
+PIL
+pytesseract
+python-docx
+joblib
