@@ -6,3 +6,5 @@ PIL
 pytesseract
 python-docx
 joblib
+sc
+scikit-learn
